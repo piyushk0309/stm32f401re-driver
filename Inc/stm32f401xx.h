@@ -2,7 +2,7 @@
  * stm32f401xx.h
  *
  *  Created on: Mar 30, 2026
- *      Author: hp
+ *      Author: TGT
  */
 
 #ifndef INC_STM32F401XX_H_
@@ -10,10 +10,12 @@
 
 
 #include "stdint.h"
+#include "stddef.h"
 
 
 
-#endif /* INC_STM32F401XX_H_ */
+#define __weak __attribute__ ((weak))
+
 
 /**************PROCESSOR SPECIFIC DETAILS***************/
 
@@ -111,6 +113,8 @@ typedef struct
 	volatile uint32_t RESERVED4;
 	volatile uint32_t AHB1ENR;
 	volatile uint32_t AHB2ENR;
+	volatile uint32_t RESERVEDd3;
+	volatile uint32_t RESERVEDd4;
 	volatile uint32_t APB1ENR;
 	volatile uint32_t APB2ENR;
 	volatile uint32_t RSERVED5;
@@ -161,6 +165,7 @@ typedef struct
 typedef struct
 {
 	volatile uint32_t  CR1;
+	volatile uint32_t  CR2;
 	volatile uint32_t  SR;
 	volatile uint32_t  DR;
 	volatile uint32_t  CRCPR;
@@ -170,6 +175,23 @@ typedef struct
 	volatile uint32_t  I2SPR;
 
 } SPI_Reg_Def_t;
+
+typedef struct
+{
+	volatile uint32_t  CR1;
+	volatile uint32_t  CR2;
+	volatile uint32_t  OAR1;
+	volatile uint32_t  OAR2;
+	volatile uint32_t  DR;
+	volatile uint32_t  SR1;
+	volatile uint32_t  SR2;
+	volatile uint32_t  CCR;
+	volatile uint32_t  TRISE;
+	volatile uint32_t  FLTR;
+
+
+
+}I2C_Reg_Def_t;
 
 
 
@@ -188,8 +210,17 @@ typedef struct
 #define GPIOE	((GPIO_Reg_Def_t*)GPIOE_BASEADDR)
 #define GPIOH	((GPIO_Reg_Def_t*)GPIOH_BASEADDR)
 
-//SPI REGDEFS
+//I2C REGDEFS
 #define SPI1	((SPI_Reg_Def_t*)SPI1_BASEADDR)
+#define SPI2	((SPI_Reg_Def_t*)SPI2_BASEADDR)
+#define SPI3	((SPI_Reg_Def_t*)SPI3_BASEADDR)
+#define SPI4	((SPI_Reg_Def_t*)SPI4_BASEADDR)
+
+//I2C REG DEFS
+#define I2C1	((I2C_Reg_Def_t*)I2C1_BASEADDR)
+#define I2C2	((I2C_Reg_Def_t*)I2C2_BASEADDR)
+#define I2C3	((I2C_Reg_Def_t*)I2C3_BASEADDR)
+
 
 
 
@@ -249,8 +280,8 @@ typedef struct
 /* CLOCK DISABLE MACROS FOR SPI */
 
 #define  SPI1_PCLK_DI()		(RCC->APB2ENR &= ~(1<<12))
-#define  SPI2_PCLK_EN()		(RCC->APB1ENR &= ~(1<<14))
-#define  SPI3_PCLK_EN()		(RCC->APB1ENR &= ~(1<<15))
+#define  SPI2_PCLK_DI()		(RCC->APB1ENR &= ~(1<<14))
+#define  SPI3_PCLK_DI()		(RCC->APB1ENR &= ~(1<<15))
 #define  SPI4_PCLK_DI()		(RCC->APB2ENR &= ~(1<<13))
 
 /*CLOCK DISABLE MACROS FOR  USART */
@@ -268,6 +299,25 @@ typedef struct
 #define GPIOD_REG_RESET()  do { (RCC->AHB1RSTR |=(1<<3)); (RCC->AHB1RSTR &= ~(1<<3));}while(0)
 #define GPIOE_REG_RESET()  do { (RCC->AHB1RSTR |=(1<<4)); (RCC->AHB1RSTR &= ~(1<<4));}while(0)
 #define GPIOH_REG_RESET()  do { (RCC->AHB1RSTR |=(1<<7)); (RCC->AHB1RSTR &= ~(1<<7));}while(0)
+
+
+
+//MACROS TO DISABLE SPI PERIPHERALS
+#define SPI2_REG_RESET()  do { (RCC->APB1RSTR |=(1<<14)); (RCC->APB1RSTR &= ~(1<<14));}while(0)
+#define SPI3_REG_RESET()  do { (RCC->APB1RSTR |=(1<<15)); (RCC->APB1RSTR &= ~(1<<15));}while(0)
+#define SPI1_REG_RESET()  do { (RCC->APB2RSTR |=(1<<12)); (RCC->APB2RSTR &= ~(1<<12));}while(0)
+#define SPI4_REG_RESET()  do { (RCC->APB2RSTR |=(1<<13)); (RCC->APB2RSTR &= ~(1<<13));}while(0)
+
+//MACROS TO DISABLE I2C PERIPHERALS
+#define I2C1_REG_RESET()  do { (RCC->APB1RSTR |=(1<<21)); (RCC->APB1RSTR &= ~(1<<21));}while(0)
+#define I2C2_REG_RESET()  do { (RCC->APB1RSTR |=(1<<22)); (RCC->APB1RSTR &= ~(1<<22));}while(0)
+#define I2C3_REG_RESET()  do { (RCC->APB1RSTR |=(1<<23)); (RCC->APB1RSTR &= ~(1<<23));}while(0)
+
+
+
+
+
+
 
 #define  gpio_baseaddr_to_code(x) 	((x == GPIOA)?0:\
 									 (x == GPIOB)?1:\
@@ -289,15 +339,6 @@ typedef struct
 
 
 
-
-
-
-
-
-
-
-
-
 // some generic macros
 #define ENABLE			1
 #define DISABLE		 	0
@@ -305,6 +346,14 @@ typedef struct
 #define RESET 		 	DISABLE
 #define GPIO_PIN_SET	SET
 #define GPIO_PIN_RESET	RESET
+
+
+#include "stm32f401xx_gpio_driver.h"
+#include "stm32f401xx_spi_driver.h"
+#include "stm32f401xx_i2c_driver.h"
+
+
+#endif /* INC_STM3F407XX_H_ */
 
 
 
