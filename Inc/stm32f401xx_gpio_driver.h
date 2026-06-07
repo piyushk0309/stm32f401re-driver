@@ -2,7 +2,7 @@
  * stm32f401xx_gpio_driver.h
  *
  *  Created on: 03-Apr-2026
- *      Author: hp
+ *      Author: TGT
  */
 
 #ifndef INC_STM32F401XX_GPIO_DRIVER_H_
