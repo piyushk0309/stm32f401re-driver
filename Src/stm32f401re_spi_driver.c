@@ -2,7 +2,7 @@
  * stm32f401xx_SPI_driver.c
  *
  *  Created on: 15-Apr-2026
- *      Author: hp
+ *      Author: TGT
  */
 
 
