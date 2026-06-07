@@ -1,6 +1,6 @@
 # stm32f401re-driver  
 ->Developed GPIO and SPI Driver for my STM32 F401RE MicroController.  
--> /inc contains the header files for both peripherals. 
+-> /inc contains the header files for both peripherals 
 -> /src contains the implementation of apis declared in /inc header files
     
 # Tested the GPIO driver with 4 Examples  
