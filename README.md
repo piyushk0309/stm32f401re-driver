@@ -7,6 +7,6 @@
 ->003led_button_ext.c                //  program to toggle led with external button click using polling   
 ->004led_button_extinterrupt.c      // program to toggle led with external button using interrupt and ISR  #
 
- #Tested the SPI driver with 1 Example
+ # Tested the SPI driver with 1 Example
  ->006spi_tx_testing.c                // program to send string "hello world" via spi at sclk freq 8MHz
 
