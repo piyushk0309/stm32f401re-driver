@@ -3,7 +3,7 @@
 
 ->  /inc contains the header files for both peripherals.
 
-->  /src contains the implementation of apis declared in /inc header files
+->  /src contains the implementation of API'S declared in /inc header files
 
     
 # Tested the GPIO driver with 4 Examples  
