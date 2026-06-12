@@ -1,5 +1,5 @@
 # stm32f401re-driver  
-->  Developed GPIO, SPI, I2C,USART Driver for my STM32 F401RE MicroController.  
+->  Developed GPIO, SPI, I2C and USART Driver for my STM32 F401RE MicroController.  
 
 ->  /inc contains the header files for both peripherals.
 
